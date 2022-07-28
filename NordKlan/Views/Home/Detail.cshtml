@@ -1,0 +1,29 @@
+﻿@model BookingEvent
+
+<h2>Details</h2>
+
+<div>
+    <div>
+        <label asp-for="Name">Event Name: @Model.Name</label>
+    </div>
+    <div>
+        <label asp-for="StartEvent">Start Event: @Model.StartEvent.ToString("dd.MM.yyyy HH:mm")</label>
+    </div>
+    <div>
+        <label asp-for="StopEvent">Stop Event: @Model.StopEvent.ToString("dd.MM.yyyy HH:mm")</label>
+    </div>
+    <div>
+        <label asp-for="EventAuthor">Author of Event: @Model.EventAuthor</label>
+    </div>
+    <div>
+        @foreach(string name in Model.Participants)
+            {
+                <div>
+                    <label asp-for="Participants">Participants name: @name</label>
+                </div>
+            }
+    </div>
+    <div>
+        <a asp-area="" asp-controller="Home" asp-action="Index">Back</a>
+    </div>
+</div>

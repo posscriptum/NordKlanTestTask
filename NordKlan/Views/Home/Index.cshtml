@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="validation" asp-validation-summary="ModelOnly"></div>
+<div><a asp-area="" asp-controller="Home" asp-action="AddNewEvent">Booking</a></div>
+<div></div>
+<div class="row">
+    <div class="col-1">
+        <a asp-area="" asp-controller="Home" asp-action="PreviewWeek" class="btn btn-success">Preview</a>
+    </div>
+    <div class="offset-10">
+        <a asp-area="" asp-controller="Home" asp-action="NextWeek" class="btn btn-success">Next</a>
+    </div>
+</div>
+
+<div >
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><p></p></th>
+                <th><p></p></th>
+                <th><p>Monday</p></th>
+                <th><p></p></th>
+                <th><p>Tuesday</p></th>
+                <th><p></p></th>
+                <th><p>Wednesday</p></th>
+                <th><p></p></th>
+                <th><p>Thursday</p></th>
+                <th><p></p></th>
+                <th><p>Friday</p></th>
+                <th><p></p></th>
+                <th><p>Saturday</p></th>
+                <th><p></p></th>
+                <th><p>Sunday</p></th>
+            </tr>
+            <tr class="info" style="font:bold 14px arial, verdana;">
+                <th><p></p></th>
+                @foreach (int dayOfWeek in Enumerable.Range(0, 7))
+                {
+                    <th><p></p></th>
+                    <th><p>@ViewBag.Table[dayOfWeek][0].ToString("dd.MM.yyyy")</p></th>
+                }
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (int hours in Enumerable.Range(0, 24))
+            {
+            <tr style="height: 100px;">
+                <td>@(ViewBag.Table[0][hours].ToString("00:HH"))</td>
+                @foreach (int dayOfWeek in Enumerable.Range(0, 7))
+                {
+                    <td><p>|</p></td>
+                    <td>
+                        @{
+                            BookingEvent eventForCompare = new BookingEvent();
+                            if (hours < 23)
+                            {
+                                eventForCompare = new BookingEvent(ViewBag.Table[dayOfWeek][hours], ViewBag.Table[dayOfWeek][hours + 1]);
+                            }
+                            else
+                            {
+                                eventForCompare = new BookingEvent(ViewBag.Table[dayOfWeek][hours-1], ViewBag.Table[dayOfWeek + 1][0]);
+                            }
+
+                            List<BookingEvent> eventsForVisualisation = ((List<BookingEvent>)ViewBag.Events)
+                                .Where(p =>         (p.StartEvent <= eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StopEvent) ||
+                                                    (p.StartEvent <= eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StartEvent) ||
+                                                    (p.StartEvent <= eventForCompare.StopEvent && p.StopEvent >= eventForCompare.StopEvent) ||
+                                                    (p.StartEvent >= eventForCompare.StartEvent && p.StopEvent <= eventForCompare.StopEvent)).ToList();
+                            foreach (var bookingEvent in eventsForVisualisation)
+                            {
+                                <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@bookingEvent.Id"><h6>@bookingEvent.Name</h6><div style="font:bold 9px arial, verdena;">@bookingEvent.EventAuthor</div>
+                                    @{if(bookingEvent.Participants != null)
+                                        {
+                                            foreach (var participant in bookingEvent?.Participants) 
+                                            {
+                                                <div style="font:bold 8px arial, verdena;">@participant</div>
+                                            }
+                                        }
+                                        
+                                }</a></div>
+                            }
+                        }
+                    </td>
+                }
+            </tr>
+            }
+        <tr>
+            <td>00:24</td>
+            @foreach (int dayOfWeek in Enumerable.Range(0, 7))
+            {
+                <td><p></p></td>
+                <td><p></p></td>
+            }
+        </tr>
+
+        </tbody>
+    </table>
+    
+</div>

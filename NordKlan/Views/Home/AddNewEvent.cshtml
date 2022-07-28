@@ -1,0 +1,30 @@
+﻿@model NordKlan.ViewModels.BookingModel
+
+<div class="validation text-danger" asp-validation-summary="All"></div>
+<form asp-area="" asp-controller="Home" asp-action="AddNewEvent" method="post">
+    <div>Event name: <input type="text" asp-for="Name" /></div>
+    @*<div>Event author: <input type="text" asp-for="Author" /></div>*@
+    <div>Start time event: <input type="time" asp-for="StartTimeEvent" /></div>
+    <div>Start date event: <input type="date" asp-for="StartDateEvent" /></div>
+    <div>Stop time event: <input type="time" asp-for="StopTimeEvent" /></div>
+    <div>Stop date event: <input type="date" asp-for="StopDateEvent" /></div>
+    <div>
+        <label>Participants</label>
+        <a class="btn btn-success" id="add">+</a>
+        <input type="text" id="participant_name" />
+    </div>
+    <div id="participantes"></div>
+    <button type="submit">Submit</button>
+</form>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("#add").click(function () {
+            $("#participantes").append("<div id='" + $("#participant_name").val() + "'><input type='text' name='Participants' value=" + $("#participant_name").val() + " /> <a class='btn btn-success'  onClick='minus(\"" + $("#participant_name").val() + "\")' >-</a> <br></div>")
+        });
+        function minus(id) {
+            $("#" + id).remove();
+        }
+    </script>
+}
