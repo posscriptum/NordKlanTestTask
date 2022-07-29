@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Models
 {
+    /// <summary>
+    /// Class <c>User</c> this is model of User table in db.
+    /// </summary>
     public class User
     {
         [Key]

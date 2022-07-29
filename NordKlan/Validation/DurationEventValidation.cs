@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Validation
 {
+    /// <summary>
+    /// Class <c>DurationEventValidation</c> validation right event duration.
+    /// </summary>
     public class DurationEventValidation: ValidationAttribute
     {
         public override bool IsValid(object value)

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Models
 {
+    /// <summary>
+    /// Class <c>BookingEvent</c> this is model of table in db.
+    /// </summary>
     public class BookingEvent
     {
         public BookingEvent()

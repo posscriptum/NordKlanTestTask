@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.ViewModels
 {
+    /// <summary>
+    /// Class <c>LoginModel</c> this is model for retrive info Login from view.
+    /// </summary>
     public class LoginModel
     {
         [Required(ErrorMessage = "Login not specified")]

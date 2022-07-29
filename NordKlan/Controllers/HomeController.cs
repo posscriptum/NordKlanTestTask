@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Controllers
 {
+    /// <summary>
+    /// Class <c>HomeController</c> main controller.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly Context _db;
@@ -20,6 +23,10 @@ namespace NordKlan.Controllers
         {
             _db = db;
         }
+
+        /// <summary>
+        /// Action <c>Index</c> call Index view. Main view.
+        /// </summary>
         [Authorize]
         public IActionResult Index()
         {
@@ -62,17 +69,23 @@ namespace NordKlan.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Action <c>AddNewEvent</c> call AddNewEvent view.
+        /// </summary>
         public IActionResult AddNewEvent()
         {
             return View();
         }
 
+        /// <summary>
+        /// Action <c>AddNewEvent</c> post call AddNewEvent view. Save new event to db.
+        /// </summary>
         [HttpPost]
         public IActionResult AddNewEvent(BookingModel bookingModel)
         {
             if (ModelState.IsValid)
             {
-                //need check intersect with other event
+                //check intersect with other event
                 var bookingEvent = new BookingEvent(bookingModel.StartDateTime, bookingModel.StopDateTime);
                 
                 if (_db.BookingEvents.Where(p =>    (p.StartEvent <= bookingEvent.StartEvent && p.StopEvent >= bookingEvent.StopEvent) ||
@@ -90,23 +103,35 @@ namespace NordKlan.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Action <c>Detail</c> call Detail view.
+        /// </summary>
         public IActionResult Detail(int id)
         {
             return View(_db.BookingEvents.Where(p => p.Id == id).FirstOrDefault());
         }
 
+        /// <summary>
+        /// Action <c>PreviewWeek</c> Change week on one week before.
+        /// </summary>
         public IActionResult PreviewWeek()
         {
             ChangeSessionByKeyNumberWeek(-1);
             return Redirect("Index"); ;
         }
 
+        /// <summary>
+        /// Action <c>NextWeek</c> Change week on one week next.
+        /// </summary>
         public IActionResult NextWeek()
         {
             ChangeSessionByKeyNumberWeek(1);
             return Redirect("Index");
         }
 
+        /// <summary>
+        /// Action <c>ChangeSessionByKeyNumberWeek</c> Change Session By Key Number Week.
+        /// </summary>
         private void ChangeSessionByKeyNumberWeek(int value)
         {
             if (HttpContext.Session.TryGetValue("numberWeek", out byte[] numberWeek))

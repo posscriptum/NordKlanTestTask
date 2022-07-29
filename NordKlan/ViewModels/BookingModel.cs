@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.ViewModels
 {
+    /// <summary>
+    /// Class <c>BookingModel</c> this is model for retrive info from AddNewEvent view.
+    /// </summary>
     public class BookingModel
     {
         [DataType(DataType.DateTime)]

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Controllers
 {
+    /// <summary>
+    /// Class <c>AccountController</c> controller for working with user accounts.
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly Context _db;
@@ -20,12 +23,18 @@ namespace NordKlan.Controllers
             _db = context;
         }
 
+        /// <summary>
+        /// Action <c>Login</c> call login view.
+        /// </summary>
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        /// <summary>
+        /// Action <c>Login Post</c> post call login view.
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
@@ -44,12 +53,18 @@ namespace NordKlan.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Action <c>Register</c> call Register view.
+        /// </summary>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        /// <summary>
+        /// Action <c>Register Post</c> post call Register view.
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -72,6 +87,9 @@ namespace NordKlan.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Action <c>Authenticate</c> authenticate. working with clame.
+        /// </summary>
         private async Task Authenticate(string userName)
         {
             var claims = new List<Claim>
@@ -82,6 +100,9 @@ namespace NordKlan.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
+        /// <summary>
+        /// Action <c>Logout</c> call Logout view.
+        /// </summary>
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

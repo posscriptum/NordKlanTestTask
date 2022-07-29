@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NordKlan.Models
 {
+    /// <summary>
+    /// Class <c>Context</c> this is context to db.
+    /// </summary>
     public class Context: DbContext
     {
         public DbSet<User> Users { get; set; }
@@ -16,6 +19,9 @@ namespace NordKlan.Models
         {
             Database.EnsureCreated();
         }
+        /// <summary>
+        /// Method <c>OnModelCreating</c> add working with property List type.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<BookingEvent>().Property(p => p.Participants)
