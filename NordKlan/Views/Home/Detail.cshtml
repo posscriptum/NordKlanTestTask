@@ -16,12 +16,17 @@
         <label asp-for="EventAuthor">Author of Event: @Model.EventAuthor</label>
     </div>
     <div>
-        @foreach(string name in Model.Participants)
+        @{
+            if (Model.Participants != null)
             {
-                <div>
-                    <label asp-for="Participants">Participants name: @name</label>
-                </div>
+                foreach (string name in Model.Participants)
+                {
+                    <div>
+                        <label asp-for="Participants">Participants name: @name</label>
+                    </div>
+                }
             }
+        }
     </div>
     <div>
         <a asp-area="" asp-controller="Home" asp-action="Index">Back</a>

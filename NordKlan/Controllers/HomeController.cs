@@ -75,15 +75,15 @@ namespace NordKlan.Controllers
                 //need check intersect with other event
                 var bookingEvent = new BookingEvent(bookingModel.StartDateTime, bookingModel.StopDateTime);
                 
-                if (_db.BookingEvents.Where(p =>    (p.StartEvent < bookingEvent.StartEvent && p.StopEvent > bookingEvent.StopEvent) ||
-                                                    (p.StartEvent < bookingEvent.StartEvent && p.StopEvent > bookingEvent.StartEvent) ||
-                                                    (p.StartEvent < bookingEvent.StopEvent && p.StopEvent > bookingEvent.StopEvent) ||
-                                                    (p.StartEvent > bookingEvent.StartEvent && p.StopEvent < bookingEvent.StopEvent)).Any())
+                if (_db.BookingEvents.Where(p =>    (p.StartEvent <= bookingEvent.StartEvent && p.StopEvent >= bookingEvent.StopEvent) ||
+                                                    (p.StartEvent <= bookingEvent.StartEvent && p.StopEvent >= bookingEvent.StartEvent) ||
+                                                    (p.StartEvent <= bookingEvent.StopEvent && p.StopEvent >= bookingEvent.StopEvent) ||
+                                                    (p.StartEvent >= bookingEvent.StartEvent && p.StopEvent <= bookingEvent.StopEvent)).Any())
                 {
                     ModelState.AddModelError("Intersection", "Event have intersection with existing event!");
                     return View();
                 }
-                _db.BookingEvents.Add(new BookingEvent(User.Identity.Name, bookingModel.StartDateTime, bookingModel.StopDateTime, bookingModel.Author, bookingModel.Participants));
+                _db.BookingEvents.Add(new BookingEvent(bookingModel.Name, bookingModel.StartDateTime, bookingModel.StopDateTime, User.Identity.Name, bookingModel.Participants));
                 _db.SaveChanges();
                 return Redirect("Index");
             }

@@ -14,10 +14,10 @@ namespace NordKlan.Controllers
 {
     public class AccountController : Controller
     {
-        private Context db;
+        private readonly Context _db;
         public AccountController(Context context)
         {
-            db = context;
+            _db = context;
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace NordKlan.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                User user = await _db.Users.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(model.Login);
@@ -56,11 +56,11 @@ namespace NordKlan.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
+                User user = await _db.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
                 if (user == null)
                 {
-                    db.Users.Add(new User { Login = model.Login, Password = model.Password });
-                    await db.SaveChangesAsync();
+                    _db.Users.Add(new User { Login = model.Login, Password = model.Password });
+                    await _db.SaveChangesAsync();
 
                     await Authenticate(model.Login);
 

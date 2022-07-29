@@ -24,6 +24,7 @@
             $("#participantes").append("<div id='" + $("#participant_name").val() + "'><input type='text' name='Participants' value=" + $("#participant_name").val() + " /> <a class='btn btn-success'  onClick='minus(\"" + $("#participant_name").val() + "\")' >-</a> <br></div>")
         });
         function minus(id) {
+            alert(id);
             $("#" + id).remove();
         }
     </script>

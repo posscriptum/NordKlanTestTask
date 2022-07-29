@@ -63,10 +63,10 @@
                             }
 
                             List<BookingEvent> eventsForVisualisation = ((List<BookingEvent>)ViewBag.Events)
-                                .Where(p =>         (p.StartEvent <= eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StopEvent) ||
-                                                    (p.StartEvent <= eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StartEvent) ||
-                                                    (p.StartEvent <= eventForCompare.StopEvent && p.StopEvent >= eventForCompare.StopEvent) ||
-                                                    (p.StartEvent >= eventForCompare.StartEvent && p.StopEvent <= eventForCompare.StopEvent)).ToList();
+                                .Where(p =>         (p.StartEvent < eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StopEvent) ||
+                                                    (p.StartEvent < eventForCompare.StartEvent && p.StopEvent >= eventForCompare.StartEvent) ||
+                                                    (p.StartEvent < eventForCompare.StopEvent && p.StopEvent >= eventForCompare.StopEvent) ||
+                                                    (p.StartEvent > eventForCompare.StartEvent && p.StopEvent <= eventForCompare.StopEvent)).ToList();
                             foreach (var bookingEvent in eventsForVisualisation)
                             {
                                 <div><a class="btn btn-info" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@bookingEvent.Id"><h6>@bookingEvent.Name</h6><div style="font:bold 9px arial, verdena;">@bookingEvent.EventAuthor</div>
